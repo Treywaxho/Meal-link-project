@@ -1,0 +1,15 @@
+{
+  "name": "meal-link-root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm run dev --prefix meal-link-frontend",
+    "dev:backend": "npm run dev --prefix meal-link-frontend/Meal-link",
+    "install:all": "npm install && npm install --prefix meal-link-frontend && npm install --prefix meal-link-frontend/Meal-link"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "firebase": "^12.9.0",
+    "paynow": "^2.2.2"
+  }
+}
