@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Meal Link Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(30, 30, 30, 0.05) 100%);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="glass-card auth-card slide-up">
+            <div class="auth-header">
+                <i class="fas fa-utensils"></i>
+                <h2>Welcome Back</h2>
+                <p class="text-muted">Sign in to Meal Link Platform</p>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="studentId" placeholder=" " required
+                        autocomplete="username">
+                    <label class="floating-label">Student ID / Email</label>
+                    <div class="invalid-feedback">Student ID is required</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder=" " required
+                        autocomplete="current-password">
+                    <label class="floating-label">Password</label>
+                    <div class="invalid-feedback">Password is required</div>
+                </div>
+
+                <div class="form-group" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <label
+                        style="display: flex; align-items: center; gap: 5px; color: var(--text-muted); cursor: pointer;">
+                        <input type="checkbox" id="remember-me"> Remember me
+                    </label>
+                    <a href="#" style="color: var(--primary-color);">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block pulse"
+                    style="animation-play-state: paused;">Login</button>
+
+                <p class="text-center mt-2 text-muted" style="margin-bottom: 0;">
+                    Don't have an account? <a href="register.html">Register</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    <script type="module" src="js/auth.js"></script>
+</body>
+
+</html>

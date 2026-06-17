@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet - Meal Link Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .wallet-container {
+            padding: 40px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .balance-amount {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-buttons .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .action-buttons .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .transaction-list {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 24px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        :root.dark-theme .transaction-item {
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .tx-in .transaction-icon {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--success-color);
+        }
+
+        .tx-out .transaction-icon {
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--danger-color);
+        }
+
+        .tx-in .tx-amount {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .tx-out .tx-amount {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        :root.dark-theme .tx-out .tx-amount {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-utensils"></i> Meal Link
+            </a>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="menu.html" class="nav-link">Menu</a>
+                <a href="wallet.html" class="nav-link active">Wallet</a>
+                <a href="orders.html" class="nav-link">Orders</a>
+                <button id="theme-toggle" class="btn btn-outline" style="padding: 5px 10px; border-radius: 50%;"><i
+                        class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="wallet-container container">
+
+        <div class="balance-card slide-up">
+            <h3 style="font-weight: 400; opacity: 0.9;">Available Balance</h3>
+            <div style="display: flex; justify-content: center; align-items: baseline; gap: 5px;">
+                <span style="font-size: 2rem; font-weight: 500;">$</span>
+                <span class="balance-amount" id="balance-display">0.00</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="toggleModal('deposit-modal', true)"><i class="fas fa-plus"></i> Add
+                    Funds</button>
+                <button class="btn"><i class="fas fa-exchange-alt"></i> Transfer</button>
+            </div>
+        </div>
+
+        <div class="transaction-list slide-up delay-1">
+            <h3 style="margin-bottom: 20px;">Recent Transactions</h3>
+            <div id="transactions-container">
+                <!-- Injected via JS -->
+                <div style="text-align: center; padding: 30px;">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Deposit Modal -->
+    <div class="modal-overlay" id="deposit-modal">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="toggleModal('deposit-modal', false)"></i>
+            <h3 style="margin-bottom: 20px;">Add Funds to Wallet</h3>
+
+            <form id="deposit-form">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                    <button type="button" class="btn btn-outline amount-preset" data-amount="10">$10</button>
+                    <button type="button" class="btn btn-outline amount-preset" data-amount="20">$20</button>
+                    <button type="button" class="btn btn-outline amount-preset" data-amount="50">$50</button>
+                </div>
+
+                <div class="form-group">
+                    <input type="number" class="form-control" id="custom-amount" placeholder=" " min="1" step="0.01"
+                        required>
+                    <label class="floating-label">Custom Amount ($)</label>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control" required style="color: var(--text-main);">
+                        <option value="" disabled selected hidden>Select Payment Method</option>
+                        <option value="ecocash">EcoCash Simulation</option>
+                        <option value="onemoney">OneMoney Simulation</option>
+                        <option value="card">Bank Card Simulation</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block pulse" id="confirm-deposit-btn"
+                    style="animation-play-state: paused;">Confirm Deposit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/wallet.js"></script>
+</body>
+
+</html>

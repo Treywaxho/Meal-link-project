@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Meal Link Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .orders-container {
+            padding: 40px 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            margin-bottom: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 15px;
+        }
+
+        :root.dark-theme .order-header {
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        :root.dark-theme .order-id {
+            color: var(--text-light);
+        }
+
+        .order-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .order-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-items-preview {
+            color: var(--text-main);
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .order-total {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-left: 20px;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        /* Order Details Modal specific styling */
+        .details-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+
+        :root.dark-theme .details-item {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .details-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-utensils"></i> Meal Link
+            </a>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="menu.html" class="nav-link">Menu</a>
+                <a href="wallet.html" class="nav-link">Wallet</a>
+                <a href="orders.html" class="nav-link active">Orders</a>
+                <button id="theme-toggle" class="btn btn-outline" style="padding: 5px 10px; border-radius: 50%;"><i
+                        class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="orders-container container">
+
+        <div class="fade-in mb-3">
+            <h2>Order History</h2>
+            <p class="text-muted">Track your recent purchases and view receipts.</p>
+        </div>
+
+        <div id="orders-list">
+            <!-- Loading indicator -->
+            <div style="text-align: center; padding: 40px;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Order Details Modal -->
+    <div class="modal-overlay" id="order-details-modal">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" onclick="toggleModal('order-details-modal', false)"></i>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h3 id="modal-order-id">Order #...</h3>
+                <span class="badge" id="modal-order-status">Status</span>
+            </div>
+
+            <div
+                style="background: rgba(0,0,0,0.02); padding: 15px; border-radius: var(--border-radius); margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;"><i
+                        class="fas fa-calendar"></i> Date:</p>
+                <p id="modal-order-date" style="font-weight: 500;"></p>
+            </div>
+
+            <h4 style="margin-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;">Items
+                Ordered</h4>
+            <div id="modal-order-items" style="margin-bottom: 20px;">
+                <!-- Items injected here -->
+            </div>
+
+            <div
+                style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 700; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px; color: var(--primary-color);">
+                <span>Total Amount:</span>
+                <span id="modal-order-total">$0.00</span>
+            </div>
+
+            <button class="btn btn-outline btn-block mt-2" onclick="window.print()"><i class="fas fa-print"></i> Print
+                Receipt</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/orders.js"></script>
+</body>
+
+</html>

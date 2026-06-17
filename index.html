@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Link Platform – NUST Edition</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-utensils"></i> Meal Link
+            </a>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="login.html" class="nav-link" id="login-link">Login</a>
+                <a href="register.html" class="btn btn-primary" id="register-link">Register</a>
+                <a href="dashboard.html" class="nav-link" id="dashboard-link" style="display: none;">Dashboard</a>
+                <a href="#" class="nav-link" id="logout-btn" style="display: none;">Logout</a>
+                <button id="theme-toggle" class="btn btn-outline" style="padding: 5px 10px; border-radius: 50%;"><i
+                        class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero section text-center"
+            style="background: linear-gradient(135deg, rgba(255,107,0,0.1) 0%, rgba(30,30,30,0.05) 100%); min-height: 80vh; display: flex; align-items: center;">
+            <div class="container fade-in">
+                <h1 style="font-size: 3.5rem; margin-bottom: 20px; color: var(--secondary-color);">
+                    Digital Dining Experience
+                </h1>
+                <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px auto;">
+                    The premier platform for NUST students to discover, order, and enjoy meals on campus. Lightning
+                    fast, completely cashless.
+                </p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="login.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 15px 40px;">Get
+                        Started</a>
+                    <a href="#features" class="btn btn-outline" style="font-size: 1.2rem; padding: 15px 40px;">Learn
+                        More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section">
+            <div class="container">
+                <div class="text-center mb-3 fade-in delay-1">
+                    <h2>Why Choose Meal Link?</h2>
+                    <p class="text-muted">Designed specifically for the fast-paced university lifestyle.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <!-- Feature 1 -->
+                    <div class="glass-card text-center fade-in delay-2">
+                        <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Fast Ordering</h3>
+                        <p class="text-muted mt-1">Skip the queues. Order your favorite meals in seconds and pick them
+                            up when they are hot and ready.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card text-center fade-in delay-3">
+                        <div style="font-size: 3rem; color: var(--success-color); margin-bottom: 20px;">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>Digital Wallet</h3>
+                        <p class="text-muted mt-1">Go totally cashless. Manage your dining funds securely within our
+                            built-in virtual wallet system.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-card text-center fade-in delay-4">
+                        <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 20px;">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h3>Vendor Network</h3>
+                        <p class="text-muted mt-1">Access menus from all approved campus vendors in one centralized,
+                            easy-to-use platform.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3 style="color: white; margin-bottom: 15px;">Meal Link Platform</h3>
+            <p style="color: #aaa;">NUST Edition &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script type="module" src="js/app.js"></script>
+    <script>
+        // Inline script to handle theme toggle icon update correctly for the landing page hero specifically
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    const isDark = document.documentElement.classList.contains('dark-theme');
+                    toggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

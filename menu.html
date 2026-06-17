@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Meal Link Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .menu-container {
+            padding: 40px 0;
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+
+        :root.dark-theme .filter-btn {
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .food-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 0;
+            /* Override glass-card padding */
+        }
+
+        .food-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #ccc;
+        }
+
+        :root.dark-theme .food-image-placeholder {
+            background: linear-gradient(45deg, #2a2a2a, #333);
+            color: #555;
+        }
+
+        .food-details {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .food-title {
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        :root.dark-theme .food-title {
+            color: var(--text-light);
+        }
+
+        .food-vendor {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .food-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        :root.dark-theme .food-price-row {
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .food-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* Cart Floating Button */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform var(--transition-fast);
+        }
+
+        .floating-cart:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid white;
+        }
+
+        :root.dark-theme .cart-badge {
+            border-color: var(--bg-main);
+        }
+
+        /* Cart Modal Adjustments */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i class="fas fa-utensils"></i> Meal Link
+            </a>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="menu.html" class="nav-link active">Menu</a>
+                <a href="wallet.html" class="nav-link">Wallet</a>
+                <a href="orders.html" class="nav-link">Orders</a>
+                <button id="theme-toggle" class="btn btn-outline" style="padding: 5px 10px; border-radius: 50%;"><i
+                        class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="menu-container container">
+
+        <div class="menu-header fade-in">
+            <h2>Campus Menu</h2>
+            <!-- Search simulation -->
+            <div class="form-group" style="margin-bottom: 0; width: 250px;">
+                <input type="text" class="form-control" placeholder=" " id="menu-search">
+                <label class="floating-label"><i class="fas fa-search"></i> Search food...</label>
+            </div>
+        </div>
+
+        <div class="filters fade-in delay-1">
+            <button class="filter-btn active" data-category="all">All Items</button>
+            <button class="filter-btn" data-category="breakfast">Breakfast</button>
+            <button class="filter-btn" data-category="lunch">Lunch & Dinner</button>
+            <button class="filter-btn" data-category="snacks">Snacks</button>
+            <button class="filter-btn" data-category="drinks">Drinks</button>
+        </div>
+
+        <!-- Food Grid dynamically populated via JS -->
+        <div class="food-grid mt-2" id="food-grid">
+            <!-- Loading indicator -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Floating Cart Button -->
+    <div class="floating-cart" id="open-cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cart-count">0</span>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" id="close-cart-btn"></i>
+            <h3 style="margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;">Your Cart
+            </h3>
+
+            <div id="cart-items-container" style="max-height: 300px; overflow-y: auto;">
+                <p class="text-muted text-center" style="padding: 20px 0;">Your cart is empty.</p>
+            </div>
+
+            <div style="margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px;">
+                <div
+                    style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.2rem; font-weight: 600;">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="btn btn-primary btn-block pulse" id="checkout-btn" disabled>Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/menu.js"></script>
+</body>
+
+</html>
